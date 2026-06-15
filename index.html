@@ -1,0 +1,799 @@
+<!doctype html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GCP Awards | SMK Pariwisata Metland School</title>
+    <meta content="An appreciation night for the finest students of SMK Pariwisata Metland School who have brought pride to our school on the national and international stage." name="description" />
+    <link href="img/metschoo/Metschoo.png" rel="icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              secondary: "#D4AF37",
+              primary: "#0F172A",
+            },
+            fontFamily: {
+              display: ["Playfair Display", "serif"],
+              body: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * { box-sizing: border-box; }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        vertical-align: middle;
+      }
+      #hero { position: relative; overflow: hidden; }
+      #hero::before {
+        content: "";
+        position: absolute; inset: 0;
+        background-image: url("img/gcp/drone-metland.png");
+        background-size: cover; background-position: center;
+        filter: blur(10px); transform: scale(1.1); z-index: 0;
+      }
+      #hero::after {
+        content: "";
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(15,23,42,0.65) 0%, rgba(15,23,42,0.88) 100%);
+        z-index: 1;
+      }
+      #hero > * { position: relative; z-index: 2; }
+      .glass-card {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+      .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+      .reveal.active { opacity: 1; transform: translateY(0); }
+      #loading-screen { z-index: 9999; transition: opacity 1s ease-in-out; }
+      #main-nav { transition: all 0.4s ease; }
+      #main-nav.scrolled {
+        background: rgba(15,23,42,0.92);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 2px 32px rgba(0,0,0,0.25);
+        padding-top: 1rem; padding-bottom: 1rem;
+      }
+      #mobile-menu { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); max-height: 0; overflow: hidden; }
+      #mobile-menu.open { max-height: 400px; }
+      .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: rgba(212,175,55,0.2); transform: translateX(-50%); }
+      @media (max-width: 767px) { .timeline-line { left: 20px; transform: none; } }
+      .cat-card { transition: all 0.4s ease; }
+      .cat-card:hover { background: #0F172A; }
+      .cat-card:hover p { color: white; }
+      .cat-card:hover .cat-icon { transform: scale(1.15); }
+      .cat-icon { transition: transform 0.3s ease; }
+      #progress-bar { transition: width 0.2s linear; }
+      @keyframes bounce-gentle {
+        0%, 100% { transform: translateY(0) translateX(-50%); }
+        50% { transform: translateY(8px) translateX(-50%); }
+      }
+      .scroll-indicator { animation: bounce-gentle 2s infinite; }
+      html { scroll-padding-top: 80px; }
+      .form-input:focus { outline: none; border-color: #D4AF37; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+      .stat-divider { border-right: 1px solid rgba(255,255,255,0.1); }
+      @media (max-width: 767px) { .stat-divider { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); } }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 font-body overflow-x-hidden selection:bg-secondary selection:text-white">
+
+    <!-- Loading Screen -->
+    <div class="fixed inset-0 bg-primary flex flex-col items-center justify-center" id="loading-screen">
+      <div class="relative w-20 h-20 mb-6">
+        <div class="absolute inset-0 border-4 border-secondary/20 rounded-full"></div>
+        <div class="absolute inset-0 border-4 border-t-secondary rounded-full animate-spin"></div>
+      </div>
+      <p class="text-white font-display text-2xl tracking-[0.3em] uppercase mb-1">Metland</p>
+      <p class="text-white/40 text-xs tracking-widest uppercase">School</p>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="fixed top-0 left-0 h-0.5 bg-secondary z-[60]" id="progress-bar" style="width:0%"></div>
+
+    <!-- Floating Controls -->
+    <div class="fixed bottom-6 right-4 sm:right-8 flex flex-col gap-3 z-[55]">
+      <button class="w-11 h-11 rounded-full glass-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform bg-white/10 border border-white/10" id="theme-toggle" title="Toggle dark mode">
+        <span class="material-symbols-outlined text-secondary text-xl">dark_mode</span>
+      </button>
+      <button class="w-11 h-11 rounded-full glass-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform bg-white/10 border border-white/10" id="music-toggle" title="Toggle music">
+        <span class="material-symbols-outlined text-secondary text-xl">music_note</span>
+      </button>
+      <a class="w-11 h-11 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:scale-110 transition-transform" href="https://wa.me/628123456789" title="WhatsApp">
+        <span class="material-symbols-outlined text-white text-xl">chat</span>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-4 sm:px-8 lg:px-16 py-5" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <img src="img/metschoo/Metschoo.png" alt="Metland School Logo" class="w-10 h-10 object-contain" />
+          <span class="font-display text-white text-xl font-bold tracking-wide">Metschoo</span>
+        </div>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex gap-8 items-center text-sm font-semibold tracking-wider uppercase">
+          <a class="text-secondary border-b-2 border-secondary pb-0.5" href="#hero">Event</a>
+          <a class="text-white/70 hover:text-secondary transition-colors" href="#schedule">Schedule</a>
+          <a class="text-white/70 hover:text-secondary transition-colors" href="#about">Awards</a>
+          <a class="text-white/70 hover:text-secondary transition-colors" href="#gallery">Gallery</a>
+        </div>
+
+        <!-- Desktop CTA -->
+        <a href="#rsvp" class="hidden md:inline-flex items-center gap-2 bg-secondary text-primary px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-lg">
+          Register Now
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-lg" id="hamburger" aria-label="Menu">
+          <span class="w-6 h-0.5 bg-white transition-all"></span>
+          <span class="w-6 h-0.5 bg-white transition-all"></span>
+          <span class="w-4 h-0.5 bg-white transition-all"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden bg-primary/95 backdrop-blur-xl rounded-2xl mt-3">
+        <div class="px-6 py-4 flex flex-col gap-1">
+          <a class="text-secondary font-semibold py-3 border-b border-white/10 text-sm tracking-wider uppercase" href="#hero" onclick="closeMobileMenu()">Event</a>
+          <a class="text-white/80 hover:text-secondary py-3 border-b border-white/10 text-sm tracking-wider uppercase transition-colors" href="#schedule" onclick="closeMobileMenu()">Schedule</a>
+          <a class="text-white/80 hover:text-secondary py-3 border-b border-white/10 text-sm tracking-wider uppercase transition-colors" href="#about" onclick="closeMobileMenu()">Awards</a>
+          <a class="text-white/80 hover:text-secondary py-3 border-b border-white/10 text-sm tracking-wider uppercase transition-colors" href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+          <a class="text-white/80 hover:text-secondary py-3 text-sm tracking-wider uppercase transition-colors" href="#rsvp" onclick="closeMobileMenu()">RSVP</a>
+          <a href="#rsvp" onclick="closeMobileMenu()" class="mt-3 bg-secondary text-primary px-6 py-3 rounded-full font-bold text-sm text-center hover:bg-secondary/90 transition-colors">
+            Confirm Attendance
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="w-full">
+
+      <!-- ===== HERO ===== -->
+      <section class="relative min-h-screen flex items-center justify-center" id="hero">
+        <div class="w-full max-w-5xl mx-auto px-5 sm:px-8 py-32 flex flex-col items-center text-center reveal" style="transition-delay:200ms">
+
+          <!-- Badge -->
+          <span class="inline-flex items-center gap-2 px-5 py-2 bg-secondary/15 border border-secondary/30 text-secondary text-xs font-bold rounded-full mb-6 tracking-[0.15em] uppercase backdrop-blur-sm">
+            <span class="material-symbols-outlined text-base">emoji_events</span>
+            GCP Awards 2026
+          </span>
+
+          <!-- Title -->
+          <h1 class="font-display text-white mb-4 leading-none uppercase tracking-wide" style="font-size: clamp(2.8rem, 10vw, 6.5rem); font-weight: 800; letter-spacing: 0.04em;">
+            Generasi Cinta<br/>
+            <span class="text-secondary italic" style="font-weight: 700;">Prestasi</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-white/70 mb-8 max-w-xl leading-relaxed" style="font-size: clamp(0.95rem, 2.5vw, 1.1rem)">
+            An appreciation night for the finest students of SMK Pariwisata Metland School who have brought pride to our school on the national and international stage.
+          </p>
+
+          <!-- Event Meta -->
+          <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-8 text-white/80 text-sm font-semibold tracking-wide">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-lg">calendar_month</span>
+              Friday, June 19, 2026
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-lg">schedule</span>
+              13:00 – 17:00 WIB
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-lg">location_on</span>
+              Metland School Auditorium
+            </div>
+          </div>
+
+          <!-- Countdown -->
+          <div class="flex justify-center gap-3 sm:gap-4 mb-10" id="countdown">
+            <div class="glass-card px-4 sm:px-6 py-4 rounded-2xl text-center min-w-[75px] sm:min-w-[90px]">
+              <div class="font-display text-2xl sm:text-3xl font-bold text-secondary" id="days">00</div>
+              <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">Days</div>
+            </div>
+            <div class="glass-card px-4 sm:px-6 py-4 rounded-2xl text-center min-w-[75px] sm:min-w-[90px]">
+              <div class="font-display text-2xl sm:text-3xl font-bold text-secondary" id="hours">00</div>
+              <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">Hours</div>
+            </div>
+            <div class="glass-card px-4 sm:px-6 py-4 rounded-2xl text-center min-w-[75px] sm:min-w-[90px]">
+              <div class="font-display text-2xl sm:text-3xl font-bold text-secondary" id="minutes">00</div>
+              <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">Mins</div>
+            </div>
+            <div class="glass-card px-4 sm:px-6 py-4 rounded-2xl text-center min-w-[75px] sm:min-w-[90px]">
+              <div class="font-display text-2xl sm:text-3xl font-bold text-secondary" id="seconds">00</div>
+              <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">Secs</div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+            <a class="bg-secondary text-primary px-8 py-4 rounded-full font-bold text-sm tracking-wider hover:scale-105 transition-all shadow-xl flex items-center justify-center gap-2" href="#about">
+              VIEW INVITATION
+              <span class="material-symbols-outlined text-base">expand_more</span>
+            </a>
+            <a class="border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-sm tracking-wider hover:bg-white/10 transition-all backdrop-blur-sm text-center" href="#rsvp">
+              CONFIRM ATTENDANCE
+            </a>
+          </div>
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="absolute bottom-8 left-1/2 scroll-indicator flex flex-col items-center gap-1 text-white/30">
+          <span class="text-[9px] tracking-[0.2em] uppercase">Scroll</span>
+          <span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+        </div>
+      </section>
+
+      <!-- ===== HEADMASTER WELCOME ===== -->
+      <section class="py-20 sm:py-28 bg-white">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 lg:px-16">
+          <div class="bg-white rounded-3xl sm:rounded-[3rem] overflow-hidden flex flex-col md:flex-row items-stretch reveal shadow-xl border border-gray-100">
+            <!-- Photo -->
+            <div class="w-full md:w-2/5 h-64 sm:h-80 md:h-auto">
+              <img alt="Principal" class="w-full h-full object-cover object-top"
+                src="img/gcp/darmawan.jpeg" />
+            </div>
+            <!-- Content -->
+            <div class="w-full md:w-3/5 p-8 sm:p-12 md:p-16 flex flex-col justify-center">
+              <span class="material-symbols-outlined text-secondary text-5xl mb-5" style="font-variation-settings:'FILL' 1">format_quote</span>
+              <h2 class="font-display text-2xl sm:text-3xl font-bold mb-5 text-primary">Principal's Welcome Address</h2>
+              <p class="font-body italic text-gray-500 mb-8 leading-relaxed text-base sm:text-lg">
+                "Success is not the finish line, and failure is never fatal. What matters most is the courage to keep moving forward. Generation of Achievement is our shared stage to celebrate the fighting spirit of SMK Pariwisata Metland School students as they carve out their accomplishments."
+              </p>
+              <div class="border-l-4 border-secondary pl-5">
+                <p class="font-display font-bold text-primary text-xl">Dr. Darmawan Sunarja, MM.Par</p>
+                <p class="text-gray-400 text-xs font-semibold uppercase tracking-[0.15em] mt-1">Principal, SMK Pariwisata Metland School</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== STATS ===== -->
+      <section class="py-16 sm:py-24 bg-primary text-white">
+        <div class="max-w-5xl mx-auto px-5 sm:px-8">
+          <div class="grid grid-cols-2 gap-8 max-w-md mx-auto justify-items-center">
+            <div class="reveal text-center py-10 px-6" style="transition-delay:100ms">
+              <div class="font-display text-secondary counter mb-2" data-target="68" style="font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:1">0</div>
+              <p class="text-white/50 text-xs uppercase tracking-[0.2em] font-semibold">Awards</p>
+            </div>
+            <!-- <div class="reveal text-center py-10 px-6 md:stat-divider" style="transition-delay:200ms">
+              <div class="font-display text-secondary counter mb-2" data-target="35" style="font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:1">0</div>
+              <p class="text-white/50 text-xs uppercase tracking-[0.2em] font-semibold">National<br/>Champions</p>
+            </div>
+            <div class="reveal text-center py-10 px-6 stat-divider" style="transition-delay:300ms">
+              <div class="font-display text-secondary counter mb-2" data-target="12" style="font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:1">0</div>
+              <p class="text-white/50 text-xs uppercase tracking-[0.2em] font-semibold">International</p>
+            </div> -->
+            <div class="reveal text-center py-10 px-6" style="transition-delay:400ms">
+              <div class="font-display text-secondary counter mb-2" data-target="45" style="font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:1">0</div>
+              <p class="text-white/50 text-xs uppercase tracking-[0.2em] font-semibold">Students</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== AWARD CATEGORIES ===== -->
+      <section class="py-20 sm:py-28" id="about">
+          <div class="max-w-6xl mx-auto px-5 sm:px-8 lg:px-16">
+              <div class="text-center mb-14 reveal">
+                  <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">
+                      Recognition Fields
+                  </span>
+
+                  <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary">
+                      Award Categories
+                  </h2>
+
+                  <div class="w-16 h-1 bg-secondary mx-auto mt-5 rounded-full"></div>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+
+                  <!-- Academic Excellence -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          workspace_premium
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          Academic Excellence
+                      </p>
+                  </div>
+
+                  <!-- Mathematics -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          functions
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          Mathematics
+                      </p>
+                  </div>
+
+                  <!-- English -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          language
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          English
+                      </p>
+                  </div>
+
+                  <!-- Vocational Skills -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          engineering
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          Vocational Skills
+                      </p>
+                  </div>
+
+                  <!-- Competition Achievement -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          emoji_events
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          Competition Achievement
+                      </p>
+                  </div>
+
+                  <!-- GCP Role Model -->
+                  <div class="cat-card bg-white p-6 rounded-2xl text-center reveal shadow-sm border border-gray-100">
+                      <span class="material-symbols-outlined text-secondary text-4xl block mb-3">
+                          military_tech
+                      </span>
+                      <p class="font-bold text-primary text-sm leading-tight">
+                          GCP Role Model
+                      </p>
+                  </div>
+
+              </div>
+          </div>
+      </section>
+
+      <!-- ===== EVENT DETAILS ===== -->
+      <section class="py-20 sm:py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 lg:px-16">
+          <div class="text-center mb-12 reveal">
+            <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">Information</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-primary">Event Details</h2>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white p-8 sm:p-10 rounded-3xl reveal shadow-sm border border-gray-100">
+              <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-secondary text-3xl">event</span>
+              </div>
+              <h3 class="font-display font-bold text-xl mb-3 text-primary">Date &amp; Time</h3>
+              <p class="text-gray-500 leading-relaxed">Saturday, June 19, 2026<br/>13:00 – 17:00 WIB</p>
+            </div>
+            <div class="bg-white p-8 sm:p-10 rounded-3xl reveal shadow-sm border border-gray-100" style="transition-delay:150ms">
+              <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-secondary text-3xl">location_on</span>
+              </div>
+              <h3 class="font-display font-bold text-xl mb-3 text-primary">Venue</h3>
+              <p class="text-gray-500 leading-relaxed mb-5">Metland School Auditorium, 5rd Floor, Cileungsi, Bogor.</p>
+              <button class="flex items-center gap-2 text-secondary font-bold text-sm hover:gap-3 transition-all">
+                Open in Maps <span class="material-symbols-outlined text-base">open_in_new</span>
+              </button>
+            </div>
+            <div class="bg-white p-8 sm:p-10 rounded-3xl reveal shadow-sm border border-gray-100 sm:col-span-2 lg:col-span-1" style="transition-delay:300ms">
+              <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-secondary text-3xl">apparel</span>
+              </div>
+              <h3 class="font-display font-bold text-xl mb-3 text-primary">Dress Code</h3>
+              <p class="text-gray-500 leading-relaxed">
+                  Ladies: Black Formal Dress<br>
+                  Gentlemen: Black Suit or Blazer
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TIMELINE ===== -->
+      <section class="py-20 sm:py-28 bg-white" id="schedule">
+        <div class="max-w-4xl mx-auto px-5 sm:px-8 lg:px-16">
+          <div class="text-center mb-16 reveal">
+            <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">Rundown</span>
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary">
+              Event Schedule
+            </h2>
+            <p class="text-gray-400 mt-3 text-base">
+              Program lineup for the Graduation & Achievement Awards Ceremony
+            </p>
+          </div>
+
+          <div class="relative">
+            <div class="timeline-line hidden md:block"></div>
+
+            <!-- 1 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">13:00 - 13:30</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Registration</h4>
+                <p class="text-gray-400">Guest registration and seating arrangement.</p>
+              </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Opening Ceremony</h4>
+                <p class="text-gray-400">Official opening of the event.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">13:30 - 13:40</span>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">13:40 - 13:48</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">National Anthem & School Mars</h4>
+                <p class="text-gray-400">Indonesia Raya, Mars SMK, and Mars SMK Metland.</p>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Opening Speech</h4>
+                <p class="text-gray-400">Welcome remarks from the school management.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">13:48 - 14:08</span>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">14:08 - 15:28</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Achievement Awards</h4>
+                <p class="text-gray-400">Recognition and awards presentation for outstanding students.</p>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Performance: We Are The Champions</h4>
+                <p class="text-gray-400">Special musical performance.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">15:28 - 15:33</span>
+              </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">15:33 - 15:43</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Parent Representative Speech</h4>
+                <p class="text-gray-400">Speech from the parents' representative.</p>
+              </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Valedictorian & Salutatorian Announcement</h4>
+                <p class="text-gray-400">Announcement and introduction of top graduates.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">15:43 - 15:53</span>
+              </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">15:53 - 15:58</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Student Representative Speech</h4>
+                <p class="text-gray-400">Message from the graduating students.</p>
+              </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Inspirational Alumni Video</h4>
+                <p class="text-gray-400">Special video message from alumni.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">15:58 - 16:08</span>
+              </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">16:08 - 16:18</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Special Song</h4>
+                <p class="text-gray-400">Musical tribute dedicated to parents.</p>
+              </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Prayer</h4>
+                <p class="text-gray-400">Closing prayer and gratitude.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">16:18 - 16:26</span>
+              </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">16:26 - 16:36</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Special Song</h4>
+                <p class="text-gray-400">A special performance for the homeroom teachers.</p>
+              </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <h4 class="font-bold text-primary text-xl mb-1">MSE Choir Performance</h4>
+                <p class="text-gray-400">Special performance by the MSE Choir.</p>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <span class="text-secondary font-bold text-lg">16:36 - 16:41</span>
+              </div>
+            </div>
+
+            <!-- 15 -->
+            <div class="relative flex flex-col md:flex-row md:items-center md:justify-between reveal">
+              <div class="hidden md:block w-5/12 text-right pr-12">
+                <span class="text-secondary font-bold text-lg">16:41 - 16:56</span>
+              </div>
+              <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div class="hidden md:block w-5/12 pl-12">
+                <h4 class="font-bold text-primary text-xl mb-1">Group Photo Session</h4>
+                <p class="text-gray-400">Commemorative photos with students, teachers, and guests.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===== GALLERY ===== -->
+      <section class="py-20 sm:py-28 bg-gray-50" id="gallery">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 lg:px-16">
+          <div class="text-center mb-12 reveal">
+            <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">Our Best Moments</span>
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary">Achievement Gallery</h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <div class="aspect-square overflow-hidden rounded-2xl sm:rounded-3xl reveal shadow-md group" style="transition-delay:0ms">
+              <img alt="Gallery 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 cursor-pointer"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnkfoP_EdbwprIlWYM7tNcYzbtiBY6we5-eaZQ4aL33O0MMIT3QEUdRnirytMCCqmJMogpPlfTy3BVWGZpzoi10eOoS0m9Mr1u15XEEZAsRKQ6LDtdsBSM8OMAsMt4SM8TwySyBUkK8FjHtB-FXsf_5srFJlnpf_Rzc1cAzpvyoj7wX6uxKTMu-Nob0IXpRa0Vnq9DQfWd7BOgdiVAlVXOH4D_soNTN7eEjZJ93e9KKB3PPXuZBt0x-g" />
+            </div>
+            <div class="aspect-square overflow-hidden rounded-2xl sm:rounded-3xl reveal shadow-md group" style="transition-delay:80ms">
+              <img alt="Gallery 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 cursor-pointer"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFyjNSHE38Gl8ngAWV1VEqoU9r7TePQLgmIN9bL21bK0ZBqQ5rbaI0Y6y5LK1gLzFWEGUdmKiOEQEK2iI3a5DWiYXP7w4-Cl0q69tHaZ7Wx-KCERP9u94T2NfqRx4FGaozBXorxyNKxft0T-jkv_EhtvPiVvq4KBMHkqP8rQk99LGupyujyLkBZ5C0CTE3t0B3x2XK9DdoRwIM--o_om_1QuPKBwhRQW1ss-i07hrM8SFQ76bhT5ljQQ" />
+            </div>
+            <div class="aspect-square overflow-hidden rounded-2xl sm:rounded-3xl reveal shadow-md group" style="transition-delay:160ms">
+              <img alt="Gallery 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 cursor-pointer"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdFZH1tia_1Dy3wQ84wXhzZ3ChPIXG954YxxnSZq0n5o00VZpPkxgfb1FYKLSoyoeO6CSnqvSWzpBSB4BpLcoq4KU9onPHJZqmijPXKyaXN04U-TUz66_BA6m4yfYVhPi53KVTkmh7Mj0wd3gfUUr23lHyG6qCyO57Bf5hTqcSVU0ryt95aAyFVip5T8jlfj07Zk0PsisWgcmbzBaY3lQFkog7AH6EGpukOf7QTJRzcE0BTw_iGXJ2fg" />
+            </div>
+            <div class="aspect-square overflow-hidden rounded-2xl sm:rounded-3xl reveal shadow-md group" style="transition-delay:240ms">
+              <img alt="Gallery 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 cursor-pointer"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKlNIV473H2y5eBfHWjy2DjlVerXiERCGEu_TosQugoc83Q8expiSSDzyP6hbAihVK4YaCrifcSyTd3ZsmxTpOCZYJleV45u66HBwJnBNBJ6njbiDu4Q5_eAYFJLrWh64TaHOTvLzGquuWjSswa67K5lAwCpm1mMdJXPvTePObbzF2YouHPopw1okS5fvP6WHeySOcKthKVSsrs37cd3s7JFg-zSmPNPa_qp2HoVhetypdGWwujzFSMA" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== RSVP ===== -->
+      <section class="py-20 sm:py-28 bg-white" id="rsvp">
+        <div class="max-w-3xl mx-auto px-5 sm:px-8">
+          <div class="bg-gray-50 p-8 sm:p-12 md:p-16 rounded-3xl sm:rounded-[3rem] shadow-xl reveal border border-gray-100">
+            <div class="text-center mb-10">
+              <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">Form</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-primary">Confirm Attendance</h2>
+              <p class="text-gray-400 mt-3">Please confirm your attendance by filling in the form below.</p>
+            </div>
+            <form class="space-y-5" id="rsvp-form">
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block font-bold text-primary text-sm mb-2 px-1">Full Name</label>
+                  <input type="text" placeholder="Enter your full name" required
+                    class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all" />
+                </div>
+                <div>
+                  <label class="block font-bold text-primary text-sm mb-2 px-1">Class / Position</label>
+                  <input type="text" placeholder="e.g. XII Hospitality 1" required
+                    class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all" />
+                </div>
+                <div>
+                  <label class="block font-bold text-primary text-sm mb-2 px-1">WhatsApp Number</label>
+                  <input type="tel" placeholder="+62 8xx xxxx xxxx" required
+                    class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all" />
+                </div>
+                <div>
+                  <label class="block font-bold text-primary text-sm mb-2 px-1">Attendance Status</label>
+                  <select class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all appearance-none">
+                    <option>Will Attend</option>
+                    <option>Unable to Attend</option>
+                    <option>Not Sure Yet</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block font-bold text-primary text-sm mb-2 px-1">Number of Guests</label>
+                <input type="number" min="1" max="2" value="1"
+                  class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all" />
+              </div>
+              <div>
+                <label class="block font-bold text-primary text-sm mb-2 px-1">Message / Wishes</label>
+                <textarea rows="4" placeholder="Write your wishes for the award recipients..."
+                  class="form-input w-full bg-white border border-gray-200 rounded-2xl px-4 py-3.5 text-gray-800 text-sm transition-all resize-none"></textarea>
+              </div>
+              <div class="pt-3">
+                <button type="submit" class="w-full bg-primary text-white py-4 rounded-2xl font-bold text-sm tracking-wider hover:bg-primary/90 hover:scale-[1.02] transition-all shadow-lg">
+                  SUBMIT CONFIRMATION
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FOOTER ===== -->
+      <footer class="bg-primary text-white/50 py-16 px-5 sm:px-8">
+        <div class="max-w-4xl mx-auto flex flex-col items-center gap-6">
+          <div class="flex items-center gap-3 bg-white rounded-full px-6 py-3">
+            <img src="img/metschoo/Metschoo.png" alt="Metland School" class="w-20 h-20 object-contain" />
+            <img src="img/metschoo/always-inspiring.png" alt="Always Inspiring" class="w-20 h-20 object-contain" />
+            <img src="img/metschoo/gcp.png" alt="GCP" class="w-20 h-20 object-contain" />
+          </div>
+          <div class="w-full max-w-xs h-px bg-white/10"></div>
+          <p class="text-xs text-center">© 2026 SMK Pariwisata Metland School. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="fixed inset-0 bg-primary/95 z-[100] hidden items-center justify-center p-5 backdrop-blur-sm" id="success-modal">
+      <div class="bg-white w-full max-w-sm p-10 rounded-3xl text-center shadow-2xl">
+        <span class="material-symbols-outlined text-secondary text-6xl mb-4" style="font-variation-settings:'FILL' 1">check_circle</span>
+        <h3 class="font-display font-bold text-2xl text-primary mb-3">Thank You!</h3>
+        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Your confirmation has been received. Please save the QR Code below for check-in at the venue.</p>
+        <div class="bg-gray-50 p-5 rounded-2xl inline-block mb-6">
+          <img alt="QR Code" class="w-36 h-36" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4zAfgLdddA1HD3XHqlEqHONOThMFQeyh_JhqcQWk0J7F-bzv2mfQp41e_mBykfWWdVbLcR195NkqDpZz55F_gcHWBXA-WWY3k1Me1im3EfAyCa1jr0pYYp6zQa0n9fPjmkoThx7bRdRKeX8julnUk4dGkDDWWztXz6dCvX1saTWxn79f-jH5-Ab0KVVp0O-zCwfCKrm1bAKkr8VMJX_TkQRm1RdPoeU9p-hOTAfXGrfMpCEUbLaTktQ" />
+        </div>
+        <button onclick="document.getElementById('success-modal').classList.add('hidden');document.getElementById('success-modal').classList.remove('flex')"
+          class="w-full bg-primary text-white py-4 rounded-2xl font-bold text-sm tracking-wider hover:bg-primary/90 transition-all">
+          DONE
+        </button>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const ls = document.getElementById("loading-screen");
+          ls.style.opacity = "0";
+          setTimeout(() => ls.classList.add("hidden"), 1000);
+        }, 1400);
+      });
+
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobile-menu");
+      let menuOpen = false;
+      function closeMobileMenu() { mobileMenu.classList.remove("open"); menuOpen = false; }
+      hamburger.addEventListener("click", () => { menuOpen = !menuOpen; mobileMenu.classList.toggle("open", menuOpen); });
+
+      window.addEventListener("scroll", () => {
+        const winScroll = document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        document.getElementById("progress-bar").style.width = (winScroll / height * 100) + "%";
+        document.getElementById("main-nav").classList.toggle("scrolled", winScroll > 60);
+      });
+
+      document.getElementById("theme-toggle").addEventListener("click", function() {
+        document.documentElement.classList.toggle("dark");
+        this.querySelector("span").innerText = document.documentElement.classList.contains("dark") ? "light_mode" : "dark_mode";
+      });
+
+      document.getElementById("music-toggle").addEventListener("click", function() {
+        const icon = this.querySelector("span");
+        icon.innerText = icon.innerText === "music_note" ? "volume_up" : "music_note";
+      });
+
+      const countdownDate = new Date("June 19, 2026 13:00:00").getTime();
+      const secEl = document.getElementById("seconds");
+      const countInterval = setInterval(() => {
+        const dist = countdownDate - Date.now();
+        if (dist < 0) {
+          clearInterval(countInterval);
+          document.getElementById("countdown").innerHTML = '<div class="text-secondary font-bold text-xl tracking-widest glass-card px-8 py-4 rounded-2xl">🎉 EVENT IS LIVE</div>';
+          return;
+        }
+        const pad = n => String(n).padStart(2, "0");
+        document.getElementById("days").innerText    = pad(Math.floor(dist / 86400000));
+        document.getElementById("hours").innerText   = pad(Math.floor((dist % 86400000) / 3600000));
+        document.getElementById("minutes").innerText = pad(Math.floor((dist % 3600000) / 60000));
+        if (secEl) secEl.innerText = pad(Math.floor((dist % 60000) / 1000));
+      }, 1000);
+
+      const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("active"); revealObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
+
+      const counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.querySelectorAll(".counter").forEach(el => {
+            const target = +el.dataset.target;
+            let count = 0;
+            const inc = target / 60;
+            const tick = () => { count = Math.min(count + inc, target); el.innerText = Math.ceil(count); if (count < target) setTimeout(tick, 25); };
+            tick();
+          });
+          counterObs.unobserve(e.target);
+        });
+      }, { threshold: 0.15 });
+      const statsSection = document.querySelector(".counter")?.closest("section");
+      if (statsSection) counterObs.observe(statsSection);
+
+      document.getElementById("rsvp-form").addEventListener("submit", e => {
+        e.preventDefault();
+        const modal = document.getElementById("success-modal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        e.target.reset();
+      });
+    </script>
+  </body>
+</html>
