@@ -230,7 +230,7 @@ $classes = $pdo->query("SELECT DISTINCT classroom FROM students ORDER BY classro
 
 // Build absolute base URL for invitation links
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-$baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/';
+$baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
 ?>
 <!doctype html>
 <html lang="en">
@@ -467,7 +467,7 @@ $baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '
               <?php else: ?>
                 <?php foreach ($students as $row): ?>
                   <?php 
-                    $inviteLink = $baseUrl . "index.php?code=" . $row['code']; 
+                    $inviteLink = $baseUrl . "?code=" . $row['code']; 
                     $waText = "Halo *" . urlencode($row['name']) . "*,\n\nKami mengundang Anda menghadiri acara *GCP Award 2026 - Generasi Cinta Prestasi* SMK Pariwisata Metland School.\n\nBuka undangan personal Anda melalui link berikut:\n" . urlencode($inviteLink) . "\n\nMohon lakukan konfirmasi kehadiran Anda pada link tersebut.\n\nTerima kasih!";
                     $waUrl = "https://api.whatsapp.com/send?text=" . $waText;
                     if (!empty($row['whatsapp'])) {

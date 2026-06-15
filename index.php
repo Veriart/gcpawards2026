@@ -8,7 +8,7 @@ $code = $_GET['code'] ?? '';
 $to = $_GET['to'] ?? '';
 
 $student = null;
-$guestName = 'Bapak/Ibu/Saudara/i';
+$guestName = '';
 $classroom = '';
 $isStudent = false;
 $hasRsvp = false;
@@ -184,7 +184,7 @@ if (!empty($code)) {
     </div>
 
     <!-- Loading Screen -->
-    <div class="fixed inset-0 bg-primary flex flex-col items-center justify-center" id="loading-screen">
+    <div class="hidden fixed inset-0 bg-primary flex flex-col items-center justify-center" id="loading-screen">
       <div class="relative w-20 h-20 mb-6">
         <div class="absolute inset-0 border-4 border-secondary/20 rounded-full"></div>
         <div class="absolute inset-0 border-4 border-t-secondary rounded-full animate-spin"></div>
@@ -194,16 +194,16 @@ if (!empty($code)) {
     </div>
 
     <!-- Scroll Progress Bar -->
-    <div class="fixed top-0 left-0 h-0.5 bg-secondary z-[60]" id="progress-bar" style="width:0%"></div>
+    <!-- <div class="fixed top-0 left-0 h-0.5 bg-secondary z-[60]" id="progress-bar" style="width:0%"></div> -->
 
     <!-- Floating Controls -->
     <div class="fixed bottom-6 right-4 sm:right-8 flex flex-col gap-3 z-[55]">
       <button class="w-11 h-11 rounded-full glass-card-gold flex items-center justify-center shadow-lg hover:scale-110 transition-transform bg-black/60 border border-secondary/30" id="music-toggle" title="Toggle music">
         <span class="material-symbols-outlined text-secondary text-xl">volume_up</span>
       </button>
-      <a class="w-11 h-11 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:scale-110 transition-transform" href="https://wa.me/628123456789" title="WhatsApp Contact Support">
+      <!-- <a class="w-11 h-11 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:scale-110 transition-transform" href="https://wa.me/628123456789" title="WhatsApp Contact Support">
         <span class="material-symbols-outlined text-white text-xl">chat</span>
-      </a>
+      </a> -->
     </div>
 
     <!-- Navigation -->
@@ -343,13 +343,13 @@ if (!empty($code)) {
             <!-- Content -->
             <div class="w-full md:w-3/5 p-8 sm:p-12 md:p-16 flex flex-col justify-center">
               <span class="material-symbols-outlined text-secondary text-5xl mb-5" style="font-variation-settings:'FILL' 1">format_quote</span>
-              <h2 class="font-display text-2xl sm:text-3xl font-bold mb-5 text-white">Principal's Welcome Address</h2>
+              <h2 class="font-display text-2xl sm:text-3xl font-bold mb-5 text-white">Welcoming Note</h2>
               <p class="font-body italic text-gray-300 mb-8 leading-relaxed text-base sm:text-lg">
                 "Success is not the finish line, and failure is never fatal. What matters most is the courage to keep moving forward. Generation of Achievement is our shared stage to celebrate the fighting spirit of SMK Pariwisata Metland School students as they carve out their accomplishments."
               </p>
               <div class="border-l-4 border-secondary pl-5">
                 <p class="font-display font-bold text-white text-xl">Dr. Darmawan Sunarja, MM.Par</p>
-                <p class="text-gray-400 text-xs font-semibold uppercase tracking-[0.15em] mt-1">Principal, SMK Pariwisata Metland School</p>
+                <p class="text-gray-400 text-xs font-semibold uppercase tracking-[0.15em] mt-1">The Principal of SMK Pariwisata Metland School</p>
               </div>
             </div>
           </div>
@@ -395,7 +395,7 @@ if (!empty($code)) {
                           workspace_premium
                       </span>
                       <p class="font-bold text-white text-sm leading-tight transition-colors">
-                          Academic Excellence
+                          Academic
                       </p>
                   </div>
 
@@ -474,7 +474,7 @@ if (!empty($code)) {
               </div>
               <h3 class="font-display font-bold text-xl mb-3 text-white">Venue</h3>
               <p class="text-gray-300 leading-relaxed mb-5">Metland School Auditorium, 5th Floor, Cileungsi, Bogor.</p>
-              <a href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-2 text-secondary font-bold text-sm hover:gap-3 transition-all">
+              <a href="https://maps.app.goo.gl/Eqd4wAUcKwFzXyff6" target="_blank" class="inline-flex items-center gap-2 text-secondary font-bold text-sm hover:gap-3 transition-all">
                 Open in Maps <span class="material-symbols-outlined text-base">open_in_new</span>
               </a>
             </div>
@@ -484,8 +484,8 @@ if (!empty($code)) {
               </div>
               <h3 class="font-display font-bold text-xl mb-3 text-white">Dress Code</h3>
               <p class="text-gray-300 leading-relaxed">
-                  <b class="text-secondary">Ladies:</b> Black Formal Dress<br>
-                  <b class="text-secondary">Gentlemen:</b> Black Suit or Blazer
+                  <b class="text-secondary">Ladies:</b> Dark Formal Dress<br>
+                  <b class="text-secondary">Gentlemen:</b> Dark Formal Suit
               </p>
             </div>
           </div>
@@ -501,7 +501,7 @@ if (!empty($code)) {
               Event Schedule
             </h2>
             <p class="text-gray-400 mt-3 text-base">
-              Program lineup for the Graduation & Achievement Award Ceremony
+              Program lineup for the Achievement Award Ceremony
             </p>
           </div>
 
@@ -516,7 +516,7 @@ if (!empty($code)) {
               <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-black shadow-lg z-10"></div>
               <div class="w-full md:w-5/12 pl-12">
                 <h4 class="font-bold text-white text-xl mb-1">Registration</h4>
-                <p class="text-gray-400">Guest registration and check-in scanner open.</p>
+                <p class="text-gray-400">Guest registration and check-in QR Code scanner.</p>
               </div>
             </div>
 
@@ -524,7 +524,7 @@ if (!empty($code)) {
             <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
               <div class="w-full md:w-5/12 text-right md:pr-12 pl-12 md:pl-0">
                 <h4 class="font-bold text-white text-xl mb-1">Opening Ceremony</h4>
-                <p class="text-gray-400">Official opening of the event.</p>
+                <!-- <p class="text-gray-400">Official opening of the event.</p> -->
               </div>
               <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-black shadow-lg z-10"></div>
               <div class="w-full md:w-5/12 pl-12">
@@ -540,7 +540,7 @@ if (!empty($code)) {
               <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-black shadow-lg z-10"></div>
               <div class="w-full md:w-5/12 pl-12">
                 <h4 class="font-bold text-white text-xl mb-1">Awarding Event</h4>
-                <p class="text-gray-400">Awarding event performances.</p>
+                <!-- <p class="text-gray-400">Awarding event performances.</p> -->
               </div>
             </div>
 
@@ -548,7 +548,7 @@ if (!empty($code)) {
             <div class="relative flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16 reveal">
               <div class="w-full md:w-5/12 text-right md:pr-12 pl-12 md:pl-0">
                 <h4 class="font-bold text-white text-xl mb-1">Entertainment</h4>
-                <p class="text-gray-400">Entertainment performances.</p>
+                <p class="text-gray-400">Introducing Metschoo Entertainment.</p>
               </div>
               <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-black shadow-lg z-10"></div>
               <div class="w-full md:w-5/12 pl-12">
@@ -564,7 +564,7 @@ if (!empty($code)) {
               <div class="hidden md:block w-5 h-5 bg-secondary rounded-full border-4 border-black shadow-lg z-10"></div>
               <div class="w-full md:w-5/12 pl-12">
                 <h4 class="font-bold text-white text-xl mb-1">Closing</h4>
-                <p class="text-gray-400">Event Finished</p>
+                <!-- <p class="text-gray-400">Event Finished</p> -->
               </div>
             </div>
 
@@ -598,6 +598,7 @@ if (!empty($code)) {
       </section>
 
       <!-- ===== RSVP ===== -->
+      <?php if($code != ''){?>
       <section class="py-20 sm:py-28 bg-[#0A0A0A]" id="rsvp">
         <div class="max-w-3xl mx-auto px-5 sm:px-8">
           
@@ -606,8 +607,8 @@ if (!empty($code)) {
             <!-- FORM COMPONENT -->
             <div id="rsvp-form-container" class="<?= $hasRsvp ? 'hidden' : '' ?>">
               <div class="text-center mb-10">
-                <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">RSVP Form</span>
-                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">Confirm Attendance</h2>
+                <!-- <span class="text-secondary text-xs font-bold tracking-[0.2em] uppercase mb-3 block">RSVP Form</span> -->
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">RSVP</h2>
                 <p class="text-gray-400 mt-3">Please confirm your attendance by filling in the details below.</p>
               </div>
               <form class="space-y-5" id="rsvp-form">
@@ -623,7 +624,7 @@ if (!empty($code)) {
                       class="form-input w-full bg-[#0C0C0C] border border-secondary/20 rounded-2xl px-4 py-3.5 text-white text-sm transition-all focus:border-secondary <?= $isStudent ? 'opacity-60 cursor-not-allowed bg-black/40' : '' ?>" />
                   </div>
                   <div>
-                    <label class="block font-bold text-white text-sm mb-2 px-1">Class / Affiliation</label>
+                    <label class="block font-bold text-white text-sm mb-2 px-1">Classroom</label>
                     <?php if ($isStudent): ?>
                         <input type="text" name="classroom" value="<?= htmlspecialchars($classroom) ?>" readonly
                           class="form-input w-full bg-[#0C0C0C] border border-secondary/20 rounded-2xl px-4 py-3.5 text-white text-sm transition-all opacity-60 cursor-not-allowed bg-black/40" />
@@ -656,11 +657,11 @@ if (!empty($code)) {
                   </div>
                 </div>
                 <div>
-                  <label class="block font-bold text-white text-sm mb-2 px-1">Pilihan Pendamping (Companion)</label>
+                  <label class="block font-bold text-white text-sm mb-2 px-1">Companion</label>
                   <select name="companion_type" id="form-companion-type" class="form-input w-full bg-[#0C0C0C] border border-secondary/20 rounded-2xl px-4 py-3.5 text-white text-sm transition-all focus:border-secondary appearance-none">
-                    <option value="none" <?= $companionType === 'none' ? 'selected' : '' ?>>Datang Sendiri (Tanpa Pendamping)</option>
-                    <option value="parents" <?= $companionType === 'parents' ? 'selected' : '' ?>>Orang Tua / Wali (Father / Mother)</option>
-                    <option value="sibling" <?= $companionType === 'sibling' ? 'selected' : '' ?>>Saudara / Kerabat (Sibling / Relative)</option>
+                    <option value="none" <?= $companionType === 'none' ? 'selected' : '' ?>>Without Companion</option>
+                    <option value="parents" <?= $companionType === 'parents' ? 'selected' : '' ?>>Parents</option>
+                    <option value="sibling" <?= $companionType === 'sibling' ? 'selected' : '' ?>>Sibling / Relative</option>
                   </select>
                 </div>
                 <div class="pt-3">
@@ -700,7 +701,7 @@ if (!empty($code)) {
                   
                   <div class="grid grid-cols-2 gap-4 mt-4 text-left px-2">
                     <div>
-                      <p class="text-gray-500 text-[9px] uppercase tracking-wider">Kelas / Afiliasi</p>
+                      <p class="text-gray-500 text-[9px] uppercase tracking-wider">Kelas</p>
                       <p class="text-white font-bold text-xs" id="ticket-class"><?= htmlspecialchars($isStudent ? $classroom : 'Tamu Undangan') ?></p>
                     </div>
                     <div>
@@ -749,13 +750,14 @@ if (!empty($code)) {
           </div>
         </div>
       </section>
+      <?php } ?>
 
       <!-- ===== FOOTER ===== -->
       <footer class="bg-black text-white/50 py-16 px-5 sm:px-8 border-t border-secondary/10">
         <div class="max-w-4xl mx-auto flex flex-col items-center gap-6">
-          <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-6 py-3">
+          <div class="flex items-center gap-3 bg-white/90 border border-white/10 rounded-full px-6 py-3">
             <img src="img/metschoo/Metschoo.png" alt="Metland School" class="w-16 h-16 object-contain" />
-            <img src="img/metschoo/always-inspiring.png" alt="Always Inspiring" class="w-16 h-16 object-contain bg-white/90 p-1 rounded-lg" />
+            <img src="img/metschoo/always-inspiring.png" alt="Always Inspiring" class="w-16 h-16 object-contain p-1 rounded-lg" />
             <img src="img/metschoo/gcp.png" alt="GCP" class="w-16 h-16 object-contain" />
           </div>
           <div class="w-full max-w-xs h-px bg-secondary/15"></div>
@@ -765,6 +767,7 @@ if (!empty($code)) {
     </main>
 
     <!-- Success Modal -->
+    <?php if($code != ''){?>
     <div class="fixed inset-0 bg-black/90 z-[200] hidden items-center justify-center p-5 backdrop-blur-md" id="success-modal">
       <div class="bg-[#141414] border border-secondary/30 w-full max-w-sm p-10 rounded-3xl text-center shadow-2xl">
         <span class="material-symbols-outlined text-secondary text-6xl mb-4" style="font-variation-settings:'FILL' 1">check_circle</span>
@@ -776,6 +779,7 @@ if (!empty($code)) {
         </button>
       </div>
     </div>
+    <?php } ?>
 
     <script>
       let studentCode = "<?= htmlspecialchars($code) ?>";
