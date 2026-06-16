@@ -139,7 +139,7 @@ if (!empty($code)) {
 
     <!-- Ambient Audio -->
     <audio id="bg-music" loop>
-      <source src="mars-metschoo.mp3" type="audio/mp3">
+      <source src="metschool-song.mpeg" type="audio/mpeg">
     </audio>
 
     <!-- Cover Overlay Screen -->
@@ -348,7 +348,7 @@ if (!empty($code)) {
                 "Success is not the finish line, and failure is never fatal. What matters most is the courage to keep moving forward. Generation of Achievement is our shared stage to celebrate the fighting spirit of SMK Pariwisata Metland School students as they carve out their accomplishments."
               </p>
               <div class="border-l-4 border-secondary pl-5">
-                <p class="font-display font-bold text-white text-xl">Dr. Darmawan Sunarja, MM.Par</p>
+                <p class="font-display font-bold text-white text-xl">Dr. Darmawan Sunarja, Drs., MM.Par</p>
                 <p class="text-gray-400 text-xs font-semibold uppercase tracking-[0.15em] mt-1">The Principal of SMK Pariwisata Metland School</p>
               </div>
             </div>
@@ -663,6 +663,7 @@ if (!empty($code)) {
                     <option value="parents" <?= $companionType === 'parents' ? 'selected' : '' ?>>Parents</option>
                     <option value="sibling" <?= $companionType === 'sibling' ? 'selected' : '' ?>>Sibling / Relative</option>
                   </select>
+                  <small class="text-red-500">Only one companion is allowed.</small>
                 </div>
                 <div class="pt-3">
                   <button type="submit" class="w-full bg-secondary text-primary py-4 rounded-2xl font-bold text-xs tracking-widest uppercase hover:bg-secondary/90 hover:scale-[1.01] transition-all shadow-[0_0_20px_rgba(212,175,55,0.15)]">
