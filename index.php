@@ -828,8 +828,14 @@ if (!empty($code)) {
       window.addEventListener("scroll", () => {
         const winScroll = document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        document.getElementById("progress-bar").style.width = (winScroll / height * 100) + "%";
-        document.getElementById("main-nav").classList.toggle("scrolled", winScroll > 60);
+        const progressBar = document.getElementById("progress-bar");
+        if (progressBar) {
+          progressBar.style.width = (winScroll / height * 100) + "%";
+        }
+        const mainNav = document.getElementById("main-nav");
+        if (mainNav) {
+          mainNav.classList.toggle("scrolled", winScroll > 60);
+        }
       });
 
       // Music toggle

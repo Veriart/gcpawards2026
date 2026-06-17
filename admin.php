@@ -468,8 +468,24 @@ $baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
                 <?php foreach ($students as $row): ?>
                   <?php 
                     $inviteLink = $baseUrl . "?code=" . $row['code']; 
-                    $waText = "Halo *" . urlencode($row['name']) . "*,\n\nKami mengundang Anda menghadiri acara *GCP Award 2026 - Generasi Cinta Prestasi* SMK Pariwisata Metland School.\n\nBuka undangan personal Anda melalui link berikut:\n" . urlencode($inviteLink) . "\n\nMohon lakukan konfirmasi kehadiran Anda pada link tersebut.\n\nTerima kasih!";
-                    $waUrl = "https://api.whatsapp.com/send?text=" . $waText;
+                    // $waText = "Halo *" . urlencode($row['name']) . "*,\n\nKami mengundang Anda menghadiri acara *GCP Award 2026 - Generasi Cinta Prestasi* SMK Pariwisata Metland School.\n\nBuka undangan personal Anda melalui link berikut:\n" . urlencode($inviteLink) . "\n\nMohon lakukan konfirmasi kehadiran Anda pada link tersebut.\n\nTerima kasih!";
+                    $message = <<<TEXT
+                      Halo *{$row['name']}*,
+
+                      Dengan hormat, kami mengundang Anda untuk menghadiri acara *GCP Award 2026 – Generasi Cinta Prestasi* SMK Pariwisata Metland School.
+
+                      Silakan melihat undangan personal Anda melalui tautan berikut:
+                      {$inviteLink}
+
+                      Mohon berkenan melakukan konfirmasi kehadiran melalui tautan tersebut.
+
+                      *Informasi Penting*
+                      Setiap siswa hanya diperkenankan membawa *1 (satu) orang pendamping*.
+
+                      Atas perhatian dan kehadiran Anda, kami ucapkan terima kasih.
+                      TEXT;
+
+                      $waUrl = "https://api.whatsapp.com/send?text=" . rawurlencode($message);
                     if (!empty($row['whatsapp'])) {
                         // strip clean whatsapp numbers
                         $cleanWA = preg_replace('/[^0-9]/', '', $row['whatsapp']);
