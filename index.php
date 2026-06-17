@@ -345,7 +345,7 @@ if (!empty($code)) {
               <span class="material-symbols-outlined text-secondary text-5xl mb-5" style="font-variation-settings:'FILL' 1">format_quote</span>
               <h2 class="font-display text-2xl sm:text-3xl font-bold mb-5 text-white">Welcoming Note</h2>
               <p class="font-body italic text-gray-300 mb-8 leading-relaxed text-base sm:text-lg">
-                "Success is not the finish line, and failure is never fatal. What matters most is the courage to keep moving forward. Generation of Achievement is our shared stage to celebrate the fighting spirit of SMK Pariwisata Metland School students as they carve out their accomplishments."
+                "Success is not the finish line, and failure is not the end of everything. What matters the most is the courage to keep moving forward. Generasi Cinta Prestasi is our stage to celebrate the spirit of SMK Pariwisata Metland School students in carving their finest accomplishments."
               </p>
               <div class="border-l-4 border-secondary pl-5">
                 <p class="font-display font-bold text-white text-xl">Dr. Darmawan Sunarja, Drs., MM.Par</p>
